@@ -1,13 +1,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 // const generateHTML = require('generate.html');
-
-// const employee = require('./lib/employee.js');
-// const engineer = require('./lib/engineer.js');
-// const intern = require('./lib/intern.js');
-// const manager = require('./lib/manager.js');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern.js');
+// const Manager = require('./lib/manager.js');
+const Manager = require('./lib/manager.js');
 
 const partyPeople = [];
+
 
 //prompt user to enter team manager name, id, email, office number
 function init() {
@@ -21,7 +21,7 @@ inquirer
             },
             {
                 type: 'input',
-                name: 'employeeID',
+                name: 'managerID',
                 message: 'What is their employee ID?',
                 validate: validatorNum
             },
@@ -41,7 +41,10 @@ inquirer
         //then push answers onto the array and prompt user with next questions.
         .then((answers) => {
        console.log(answers);
-       partyPeople.push(answers);
+      
+       const {managerName, managerID, managerEmail, officeNum} = answers;
+       const manager = new Manager(managerName, managerID, managerEmail, officeNum);
+       partyPeople.push(manager);
         menuPrompt();
         });
 };
@@ -96,7 +99,7 @@ function addEngineer() {
             {
                 type: 'input',
                 name: 'engineerEmail',
-                message: 'Enter manager email.',
+                message: 'Enter engineers email.',
                 validate: validatorText
             },
             {
@@ -106,9 +109,12 @@ function addEngineer() {
                 validate: validatorText
             }
         ])
-        .then((engineer) => {
-            console.log(engineer);
+        .then((answers) => {
+            console.log(answers);
+            const {engineerName, engineerID, engineerEmail, engineerGitHub} = answers;
+            const engineer = new Engineer(engineerName, engineerID, engineerEmail, engineerGitHub);
             partyPeople.push(engineer);
+            console.log(engineer);
             menuPrompt()
         })
 }
@@ -131,7 +137,7 @@ function addIntern() {
             {
                 type: 'input',
                 name: 'internEmail',
-                message: 'Enter manager email.',
+                message: 'Enter intern email.',
                 validate: validatorText
             },
             {
@@ -141,8 +147,15 @@ function addIntern() {
                 validate: validatorText
             }
         ])
-        .then((intern) => {
+        .then((answers) => {
+            console.log(answers);
+
+            const {internName, internID, internEmail, internSchool} = answers;
+            const intern = new Intern(internName, internID, internEmail, internSchool);
+
+            partyPeople.push(intern);
             console.log(intern);
+
             partyPeople.push(intern);
             // var newIntern = new intern(intern);
             menuPrompt()
