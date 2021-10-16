@@ -53,7 +53,7 @@ function menuPrompt() {
                 type: 'list',
                 name: 'menuOption',
                 message: 'What would you like to do next?',
-                options: [
+                choices: [
                     "Add an Engineer",
                     "Add an Intern",
                     "Finish building my team"
@@ -159,7 +159,7 @@ function validatorText(response) {
 };
 
     function validatorNum(response) {
-        let validation = response && typeof response === Number ? true : 'This response is required & it need to be a number! Try again!'
+        let validation = response && !isNaN(response) ? true : 'This response is required but it needs to be number! Try again!'
         return validation;
     };
 
