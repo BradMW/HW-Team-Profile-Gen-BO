@@ -92,7 +92,7 @@ function addEngineer() {
             },
             {
                 type: 'input',
-                name: 'employeeID',
+                name: 'engineerID',
                 message: 'What is their employee ID?',
                 validate: validatorNum
             },
@@ -130,7 +130,7 @@ function addIntern() {
             },
             {
                 type: 'input',
-                name: 'employeeID',
+                name: 'internID',
                 message: 'What is their employee ID?',
                 validate: validatorNum
             },
@@ -177,22 +177,113 @@ function validatorText(response) {
     };
 
 
+let htmlArray = [];
+let name, id, email, extra, extraName, icon;
+
 function finishTeam() {
     console.log("We're finished!")
+    for(let people of partyPeople) {
+      let role =  people.getRole();
+      if(role === "Manager") {
+         name = people.getName();
+         id = people.getId();
+         email = people.getEmail();
+         extraName = "Office";
+         extra = people.getOfficeNum()
+         icon = `<i class="fas fa-mug-hot"></i>`;
+      }else if(role === "Intern") {
+         name = people.getName();
+         id = people.getId();
+         email = people.getEmail();
+         extraName = "School";
+         extra = people.getSchool();
+         icon = `<i class="fas fa-user-graduate"></i>`;
+      }else if("Engineer"){
+         name = people.getName();
+         id = people.getId();
+         email = people.getEmail();
+         extraName = "GitHub";
+         extra = people.getGithub();
+         icon = `<i class="fas fa-atom"></i>`;
+      }
+      let obj = {
+          name: name,
+          id: id,
+          email: email,
+          extraName: extraName,
+          extra: extra,
+          role: role,
+          icon: icon
+      }
+      htmlArray.push(obj);
+    }
+    generateHTML(htmlArray);
 }
 
 
-// TODO: Create a function to write README file
-function writeToFile(README, data) {
-    fs.writeFile(generateHTML(data))
+const generateHTML = (htmlArray) => {
+    let htmlString = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Title</title>
+    </head>
+    <body>
+    
+    <div id="teamCard" class="container d-flex flex-wrap justify-content-center align-items-center">
+      
+    
+    
+    `;
+    let extraStuff;
+    for (let employee of htmlArray) {
+        if(employee.extraName === "GitHub") {
+            extraStuff = `<a href="https://github.com/${employee.extra}">${employee.extra}</a>`
+        } else{
+            extraStuff = employee.extra;
+        }
+        htmlString = htmlString.concat(
+            `
+            <div class="card" style="width: 18rem;">
+            <div class="card-body" style="background-color: darkblue;">
+              <h5 class="card-title">${employee.name}</h5>
+              <h5 class="card-title">${employee.icon}${employee.role}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">${employee.id}</li>
+              <li class="list-group-item">${employee.email}</li>
+              <li class="list-group-item">${employee.extraName}: ${extraStuff}</li>
+            </ul>
+          </div>
+            `
+        )
+    }
+    htmlString = htmlString.concat(
+        `
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+        </body>
+        </html>
+        `
+    )
+        writeHtml(htmlString);
+        }
+
+        function writeHtml(data) {
+            fs.writeFile("index.html", `${data}`, (err) => {
+                err ? console.log(err) : console.log("It Works!")
+            })
 }
 
-// TODO: Create a function to initialize app
-function initialize() {
-    inquirer.prompt(questions).then(answers => {
-        fs.writeFileSync('./dist/team.html', generateHTML(answers));
-    })
-}
-
-// Function call to initialize app
 init();
