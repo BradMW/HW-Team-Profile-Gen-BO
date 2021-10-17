@@ -155,8 +155,6 @@ function addIntern() {
 
             partyPeople.push(intern);
             console.log(intern);
-
-            partyPeople.push(intern);
             // var newIntern = new intern(intern);
             menuPrompt()
         })
@@ -238,6 +236,15 @@ const generateHTML = (htmlArray) => {
     </head>
     <body>
     
+    <!-- Image and text -->
+<nav class="navbar navbar-light" style="background-color: #3F6CA6;">
+    <div class="navbar-brand" style="font-size: xxx-large; color: #F2F2EB;">
+  <i class="fas fa-users" style="color: #132240;font-size: xxx-large;padding-right: 5rem;padding-left: 2rem;"></i>
+    Team Profile Builder
+  </div>
+</nav>
+
+<br><br>
     <div id="teamCard" class="container d-flex flex-wrap justify-content-center align-items-center">
       
     
@@ -253,9 +260,9 @@ const generateHTML = (htmlArray) => {
         htmlString = htmlString.concat(
             `
             <div class="card" style="width: 18rem;">
-            <div class="card-body" style="background-color: darkblue;">
-              <h5 class="card-title">${employee.name}</h5>
-              <h5 class="card-title">${employee.icon}${employee.role}</h5>
+            <div class="card-body" style="background-color: #132240;">
+              <h5 class="card-title" style="color: white;">${employee.name}</h5>
+              <h5 class="card-title" style="color: white;">${employee.icon}${employee.role}</h5>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">${employee.id}</li>
