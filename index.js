@@ -266,7 +266,7 @@ const generateHTML = (htmlArray) => {
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">${employee.id}</li>
-              <li class="list-group-item">${employee.email}</li>
+              <li class="list-group-item"> <a href="mailto:${employee.email}">${employee.email}</a></li>
               <li class="list-group-item">${employee.extraName}: ${extraStuff}</li>
             </ul>
           </div>
