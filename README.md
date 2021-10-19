@@ -24,4 +24,7 @@
  ## Features
   This Team Profile Generator will take in user input and create a dynamic HTML page that will display the information. This generator also has test files to make sure everything will run correctly. 
 
+Link to a video of the team generator in action:
+https://drive.google.com/file/d/1SOEC0Z9C_F-F5dN0NmIYags2PZRd6s9O/view
+
   ![a screen shot of the deployed page.](HW10-BO.png)
